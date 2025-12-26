@@ -1,9 +1,8 @@
-import math
 import sys
 
 
 def how_sum(target, arr):
-    dp = [None for _ in range(target + 1)]
+    dp = [None] * (target + 1)
     dp[0] = []
 
     for i in range(target + 1):
@@ -16,7 +15,7 @@ def how_sum(target, arr):
 
 
 def best_sum(target, arr):
-    dp = [None for _ in range(target + 1)]
+    dp = [None] * (target + 1)
     dp[0] = []
 
     for i in range(target + 1):
@@ -31,7 +30,7 @@ def best_sum(target, arr):
 
 
 def min_steps(k):
-    dp = [sys.maxsize for _ in range(k + 1)]
+    dp = [sys.maxsize] * (k + 1)
     dp[0] = 0
 
     for i in range(k + 1):
@@ -47,7 +46,7 @@ def max_rod_segments(n, x, y, z):
     """Given a rod of length n,
     the task is to cut the rod in such a way that the
     total number of segments of length x, y, and z is maximized."""
-    dp = [None for _ in range(n + 1)]
+    dp = [None] * (n + 1)
     dp[0] = []
 
     for i in range(n + 1):
@@ -121,25 +120,3 @@ def minimum_sum_path_triangle(arr, i=0, j=0, dp={}):
     dp[(i, j)] = arr[i][j] + min(lv1, lv2)
 
     return dp[(i, j)]
-
-
-def min_squares(n):
-    """see Lagrange's four-square theorem.md"""
-
-    def is_square(n):
-        root = int(math.sqrt(n))
-        return root * root == n
-
-    if is_square(n):
-        return 1
-
-    for i in range(1, int(math.sqrt(n)) + 1):
-        if is_square(n - i * i):
-            return 2
-
-    while n > 0 and n % 4 == 0:
-        n //= 4
-    if n % 8 == 7:
-        return 4
-
-    return 3
