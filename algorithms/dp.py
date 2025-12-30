@@ -120,3 +120,66 @@ def minimum_sum_path_triangle(arr, i=0, j=0, dp={}):
     dp[(i, j)] = arr[i][j] + min(lv1, lv2)
 
     return dp[(i, j)]
+
+
+def min_cost_path(arr, i=0, j=0, dp={}):
+    if (i, j) in dp:
+        return dp[(i, j)]
+
+    m = len(arr)
+    n = len(arr[0])
+    if i == m or j == n:
+        return sys.maxsize
+    if i == m - 1 and j == n - 1:
+        return arr[i][j]
+
+    dp[(i, j)] = arr[i][j] + min(
+        min_cost_path(arr, i, j + 1),
+        min_cost_path(arr, i + 1, j + 1),
+        min_cost_path(arr, i + 1, j),
+    )
+
+    return dp[(i, j)]
+
+
+def jump_game(arr):
+    n = len(arr)
+    dp = [sys.maxsize] * n
+    dp[0] = 0
+
+    for i in range(n):
+        for j in range(1, arr[i] + 1):
+            if i + j < n:
+                dp[i + j] = min(dp[i + j], dp[i] + 1)
+
+    return -1 if dp[-1] == sys.maxsize else dp[-1]
+
+
+def longest_common_substring(str1, str2):
+    l1, l2, res, end = len(str1), len(str2), 0, 0
+    dp = [[0] * (l2 + 1) for _ in range(l1 + 1)]
+
+    for i in range(1, l1 + 1):
+        for j in range(1, l2 + 1):
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = 1 + dp[i - 1][j - 1]
+                if dp[i][j] > res:
+                    res = dp[i][j]
+                    end = i
+
+    return res, str1[end - res : end]
+
+
+def longest_common_subsequence(str1, str2):
+    l1, l2 = len(str1), len(str2)
+    dp = [[0] * (l2 + 1) for _ in range(l1 + 1)]
+
+    for i in range(1, l1 + 1):
+        for j in range(1, l2 + 1):
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = 1 + dp[i - 1][j - 1]
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+    return dp[l1][l2]
+

@@ -1,3 +1,3 @@
 from algorithms import dp
 
-print(dp.best_sum(8, [2, 3, 5]))
+print(dp.longest_common_subsequence("ABC", "ACD"))
